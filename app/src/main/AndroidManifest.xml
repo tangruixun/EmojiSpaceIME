@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.trx.emojispaceime">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+
+        <!-- Declares the input method service -->
+        <service
+            android:name=".EmojiSpaceIMEService"
+            android:enabled="true"
+            android:exported="true"
+            android:label="@string/emojispace_input_label"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/method" />
+        </service>
+
+        <!-- Optional: an activity for controlling the IME settings -->
+        <!--<activity android:name=".EmojiSpaceIMESettings"
+            android:label="@string/emoji_input_settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>-->
+    </application>
+
+</manifest>

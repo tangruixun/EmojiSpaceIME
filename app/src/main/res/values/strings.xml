@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Emoji Spaces IME</string>
+    <string name="emojispace_input_label">Emoji Space IME</string>
+    <string name="emoji_input_settings">Emoji Space Input Settings</string>
+    <string name="subtype_en_US">English (US)</string>
+    <string name="settings_name">Keyboard Settings</string>
+</resources>
