@@ -9,6 +9,7 @@ import android.media.AudioManager;
 import android.os.IBinder;
 import android.text.InputType;
 import android.text.method.MetaKeyKeyListener;
+import android.util.Log;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,7 +29,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     private boolean caps = false;
 
-    static final boolean DEBUG = false;
+    static final boolean DEBUG = true;
 
     /**
      * This boolean indicates the optional example code for performing
@@ -72,6 +73,11 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public void onCreate() {
+        Log.i ("--->", "OnCreate ()");
+        if (DEBUG) {
+            android.os.Debug.waitForDebugger();
+        }
+
         super.onCreate();
         mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         mWordSeparators = getResources().getString(R.string.word_separators);
@@ -85,6 +91,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public View onCreateInputView() {
+        Log.i ("--->", "onCreateInputView ()");
         kv = (LatinKeyboardView) getLayoutInflater().inflate(R.layout.keyboard, null);
         keyboard = new LatinKeyboard(this, R.xml.qwerty);
         kv.setKeyboard(keyboard);
@@ -98,6 +105,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public void onInitializeInterface() {
+        Log.i ("--->", "onInitializeInterface() ");
         if (mQwertyKeyboard != null) {
             // Configuration changes can happen after the keyboard gets recreated,
             // so we need to be able to re-build the keyboards if the available
@@ -115,6 +123,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
 
     private void setLatinKeyboard(LatinKeyboard nextKeyboard) {
+        Log.i ("--->", "setLatinKeyboard ");
         final boolean shouldSupportLanguageSwitchKey =
                 mInputMethodManager.shouldOfferSwitchingToNextInputMethod(getToken());
         nextKeyboard.setLanguageSwitchKeyVisibility(shouldSupportLanguageSwitchKey);
@@ -127,6 +136,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public View onCreateCandidatesView() {
+        Log.i ("--->", "onCreateCandidatesView ");
         mCandidateView = new CandidateView(this);
         mCandidateView.setService(this);
         return mCandidateView;
@@ -140,7 +150,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public void onStartInput(EditorInfo attribute, boolean restarting) {
-
+        Log.i ("--->", "onStartInput ");
         super.onStartInput(attribute, restarting);
 
         // Reset our state.  We want to do this even if restarting, because
@@ -229,7 +239,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     @Override
     public void onStartInputView(EditorInfo info, boolean restarting) {
-
+        Log.i ("--->", "onStartInputView ");
         super.onStartInputView(info, restarting);
         // Apply the selected keyboard to the input view.
         setLatinKeyboard(mCurKeyboard);
@@ -244,6 +254,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public void onFinishInput() {
+        Log.i ("--->", "onFinishInput ");
         super.onFinishInput();
 
         // Clear current composing text and candidates.
@@ -264,6 +275,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     @Override
     public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
+        Log.i ("--->", "onCurrentInputMethodSubtypeChanged ");
         kv.setSubtypeOnSpaceKey(subtype);
     }
 
@@ -275,6 +287,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     public void onUpdateSelection(int oldSelStart, int oldSelEnd,
                                   int newSelStart, int newSelEnd,
                                   int candidatesStart, int candidatesEnd) {
+        Log.i ("--->", "onUpdateSelection ");
         super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
                 candidatesStart, candidatesEnd);
 
@@ -299,6 +312,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public void onDisplayCompletions(CompletionInfo[] completions) {
+        Log.i ("--->", "onDisplayCompletions ");
         if (mCompletionOn) {
             mCompletions = completions;
             if (completions == null) {
@@ -321,6 +335,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      * PROCESS_HARD_KEYS option.
      */
     private boolean translateKeyDown(int keyCode, KeyEvent event) {
+        Log.i ("--->", "translateKeyDown ");
         mMetaState = MetaKeyKeyListener.handleKeyDown(mMetaState,
                 keyCode, event);
         int c = event.getUnicodeChar(MetaKeyKeyListener.getMetaState(mMetaState));
@@ -354,6 +369,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+        Log.i ("--->", "onConfigurationChanged ");
         super.onConfigurationChanged(newConfig);
     }
 
@@ -382,6 +398,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.i ("--->", "onKeyDown ");
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 // The InputMethodService already takes care of the back
@@ -450,6 +467,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      */
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
+        Log.i ("--->", "onKeyUp ");
         // If we want to do transformations on text being entered with a hard
         // keyboard, we need to process the up events to update the meta key
         // state we are tracking.
@@ -467,6 +485,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      * Helper function to commit any text being composed in to the editor.
      */
     private void commitTyped(InputConnection inputConnection) {
+        Log.i ("--->", "commitTyped ");
         if (mComposing.length() > 0) {
             inputConnection.commitText(mComposing, mComposing.length());
             mComposing.setLength(0);
@@ -479,6 +498,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      * editor state.
      */
     private void updateShiftKeyState(EditorInfo attr) {
+        Log.i ("--->", "updateShiftKeyState ");
         if (attr != null
                 && kv != null && mQwertyKeyboard == kv.getKeyboard()) {
             int caps = 0;
@@ -494,6 +514,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      * Helper to determine if a given character code is alphabetic.
      */
     private boolean isAlphabet(int code) {
+        Log.i ("--->", "isAlphabet ");
         if (Character.isLetter(code)) {
             return true;
         } else {
@@ -505,6 +526,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      * Helper to send a key down / key up pair to the current editor.
      */
     private void keyDownUp(int keyEventCode) {
+        Log.i ("--->", "keyDownUp ");
         getCurrentInputConnection().sendKeyEvent(
                 new KeyEvent(KeyEvent.ACTION_DOWN, keyEventCode));
         getCurrentInputConnection().sendKeyEvent(
@@ -515,6 +537,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      * Helper to send a character to the editor as raw key events.
      */
     private void sendKey(int keyCode) {
+        Log.i ("--->", "sendKey ");
         switch (keyCode) {
             case '\n':
                 keyDownUp(KeyEvent.KEYCODE_ENTER);
@@ -530,6 +553,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     public void onText(CharSequence text) {
+        Log.i ("--->", "onText ");
         InputConnection ic = getCurrentInputConnection();
         if (ic == null) return;
         ic.beginBatchEdit();
@@ -547,6 +571,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
      * candidates.
      */
     private void updateCandidates() {
+        Log.i ("--->", "updateCandidates ");
         if (!mCompletionOn) {
             if (mComposing.length() > 0) {
                 ArrayList<String> list = new ArrayList<String>();
@@ -560,6 +585,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     public void setSuggestions(List<String> suggestions, boolean completions,
                                boolean typedWordValid) {
+        Log.i ("--->", "setSuggestions ");
         if (suggestions != null && suggestions.size() > 0) {
             setCandidatesViewShown(true);
         } else if (isExtractViewShown()) {
@@ -571,6 +597,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     private void handleBackspace() {
+        Log.i ("--->", "handleBackspace ");
         final int length = mComposing.length();
         if (length > 1) {
             mComposing.delete(length - 1, length);
@@ -587,6 +614,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     private void handleShift() {
+        Log.i ("--->", "handleShift ");
         if (kv == null) {
             return;
         }
@@ -608,6 +636,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     private void handleCharacter(int primaryCode, int[] keyCodes) {
+        Log.i ("--->", "handleCharacter ");
         if (isInputViewShown()) {
             if (kv.isShifted()) {
                 primaryCode = Character.toUpperCase(primaryCode);
@@ -625,12 +654,14 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     private void handleClose() {
+        Log.i ("--->", "handleClose ");
         commitTyped(getCurrentInputConnection());
         requestHideSelf(0);
         kv.closing();
     }
 
     private IBinder getToken() {
+        Log.i ("--->", "getToken ");
         final Dialog dialog = getWindow();
         if (dialog == null) {
             return null;
@@ -643,10 +674,12 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     private void handleLanguageSwitch() {
+        Log.i ("--->", "handleLanguageSwitch ");
         mInputMethodManager.switchToNextInputMethod(getToken(), false /* onlyCurrentIme */);
     }
 
     private void checkToggleCapsLock() {
+        Log.i ("--->", "checkToggleCapsLock ");
         long now = System.currentTimeMillis();
         if (mLastShiftTime + 800 > now) {
             mCapsLock = !mCapsLock;
@@ -657,19 +690,23 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     private String getWordSeparators() {
+        Log.i ("--->", "getWordSeparators ");
         return mWordSeparators;
     }
 
     public boolean isWordSeparator(int code) {
+        Log.i ("--->", "isWordSeparator ");
         String separators = getWordSeparators();
         return separators.contains(String.valueOf((char) code));
     }
 
     public void pickDefaultCandidate() {
+        Log.i ("--->", "pickDefaultCandidate ");
         pickSuggestionManually(0);
     }
 
     public void pickSuggestionManually(int index) {
+        Log.i ("--->", "pickSuggestionManually ");
         if (mCompletionOn && mCompletions != null && index >= 0
                 && index < mCompletions.length) {
             CompletionInfo ci = mCompletions[index];
@@ -687,6 +724,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     public void swipeRight() {
+        Log.i ("--->", "swipeRight ");
         if (mCompletionOn) {
             pickDefaultCandidate();
         }
@@ -705,6 +743,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     @Override
     public void onKey (int primaryCode, int[] keyCodes) {
+        Log.i ("--->", "onKey ");
 
         if (isWordSeparator(primaryCode)) {
             // Handle separator
