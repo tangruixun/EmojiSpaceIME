@@ -25,12 +25,9 @@ import java.util.List;
 
 public class EmojiSpaceIMEService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
 
-    private LatinKeyboard keyboard;
 
     private boolean caps = false;
-
     static final boolean DEBUG = true;
-
     /**
      * This boolean indicates the optional example code for performing
      * processing of hard keys in addition to regular text generation
@@ -43,6 +40,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     private InputMethodManager mInputMethodManager;
 
+    private LatinKeyboard keyboard;
     private LatinKeyboardView kv;
     private CandidateView mCandidateView;
     private CompletionInfo[] mCompletions;
@@ -62,7 +60,6 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     private LatinKeyboard mCurKeyboard;
 
     private String mWordSeparators;
-
 
     public EmojiSpaceIMEService() {
     }
@@ -120,6 +117,7 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
         mSymbolsKeyboard = new LatinKeyboard(this, R.xml.symbols);
         mSymbolsShiftedKeyboard = new LatinKeyboard(this, R.xml.symbols_shift);
     }
+
 
 
     private void setLatinKeyboard(LatinKeyboard nextKeyboard) {
@@ -244,8 +242,8 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
         // Apply the selected keyboard to the input view.
         setLatinKeyboard(mCurKeyboard);
         kv.closing();
-        final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
-        kv.setSubtypeOnSpaceKey(subtype);
+        //final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
+        //kv.setSubtypeOnSpaceKey(subtype);
     }
 
     /**
@@ -660,6 +658,18 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
         kv.closing();
     }
 
+    private void handleDone() {
+        Log.i ("--->", "handleDone ");
+        commitTyped(getCurrentInputConnection());
+        requestHideSelf(0);
+        kv.closing();
+    }
+
+    private void handleLanguageSwitch() {
+        Log.i ("--->", "handleLanguageSwitch ");
+        mInputMethodManager.switchToNextInputMethod(getToken(), false /* onlyCurrentIme */);
+    }
+
     private IBinder getToken() {
         Log.i ("--->", "getToken ");
         final Dialog dialog = getWindow();
@@ -671,11 +681,6 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
             return null;
         }
         return window.getAttributes().token;
-    }
-
-    private void handleLanguageSwitch() {
-        Log.i ("--->", "handleLanguageSwitch ");
-        mInputMethodManager.switchToNextInputMethod(getToken(), false /* onlyCurrentIme */);
     }
 
     private void checkToggleCapsLock() {
@@ -759,7 +764,10 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
         } else if (primaryCode == Keyboard.KEYCODE_CANCEL) {
             handleClose();
             return;
-        } else if (primaryCode == LatinKeyboardView.KEYCODE_LANGUAGE_SWITCH) {
+        } else if (primaryCode == Keyboard.KEYCODE_DONE) {
+            handleDone();
+            return;
+        }else if (primaryCode == LatinKeyboardView.KEYCODE_LANGUAGE_SWITCH) {
             handleLanguageSwitch();
             return;
         } else if (primaryCode == LatinKeyboardView.KEYCODE_OPTIONS) {
