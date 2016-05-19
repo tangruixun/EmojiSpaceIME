@@ -10,4 +10,6 @@
     <string name="label_next_key">Next</string>
     <string name="label_send_key">Send</string>
     <string name="word_separators"><![CDATA[\\u0020.,;:!?\\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;]]></string>
+    <string name="language_selection_title">Language selection</string>
+    <string name="select_language">select language</string>
 </resources>

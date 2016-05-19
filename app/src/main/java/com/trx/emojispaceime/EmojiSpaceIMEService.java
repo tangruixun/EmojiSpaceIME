@@ -97,6 +97,29 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     /**
+     * Called by the framework when your view for showing candidates needs to
+     * be generated, like {@link #onCreateInputView}.
+     */
+    @Override
+    public View onCreateCandidatesView() {
+        Log.i ("--->", "onCreateCandidatesView ");
+        mCandidateView = new CandidateView(this);
+        mCandidateView.setService(this);
+        return mCandidateView;
+    }
+
+    @Override
+    public void onStartInputView(EditorInfo info, boolean restarting) {
+        Log.i ("--->", "onStartInputView ");
+        super.onStartInputView(info, restarting);
+        // Apply the selected keyboard to the input view.
+        setLatinKeyboard(mCurKeyboard);
+        kv.closing();
+        //final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
+        //kv.setSubtypeOnSpaceKey(subtype);
+    }
+
+    /**
      * This is the point where you can do all of your UI initialization.  It
      * is called after creation and any configuration change.
      */
@@ -116,29 +139,20 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
         mQwertyKeyboard = new LatinKeyboard(this, R.xml.qwerty);
         mSymbolsKeyboard = new LatinKeyboard(this, R.xml.symbols);
         mSymbolsShiftedKeyboard = new LatinKeyboard(this, R.xml.symbols_shift);
+
     }
 
 
 
     private void setLatinKeyboard(LatinKeyboard nextKeyboard) {
         Log.i ("--->", "setLatinKeyboard ");
-        final boolean shouldSupportLanguageSwitchKey =
+        /*final boolean shouldSupportLanguageSwitchKey =
                 mInputMethodManager.shouldOfferSwitchingToNextInputMethod(getToken());
-        nextKeyboard.setLanguageSwitchKeyVisibility(shouldSupportLanguageSwitchKey);
+        nextKeyboard.setLanguageSwitchKeyVisibility(shouldSupportLanguageSwitchKey);*/
+        nextKeyboard.setLanguageSwitchKeyVisibility(true);
         kv.setKeyboard(nextKeyboard);
     }
 
-    /**
-     * Called by the framework when your view for showing candidates needs to
-     * be generated, like {@link #onCreateInputView}.
-     */
-    @Override
-    public View onCreateCandidatesView() {
-        Log.i ("--->", "onCreateCandidatesView ");
-        mCandidateView = new CandidateView(this);
-        mCandidateView.setService(this);
-        return mCandidateView;
-    }
 
     /**
      * This is the main point where we do our initialization of the input method
@@ -236,14 +250,9 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     }
 
     @Override
-    public void onStartInputView(EditorInfo info, boolean restarting) {
-        Log.i ("--->", "onStartInputView ");
-        super.onStartInputView(info, restarting);
-        // Apply the selected keyboard to the input view.
-        setLatinKeyboard(mCurKeyboard);
-        kv.closing();
-        //final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
-        //kv.setSubtypeOnSpaceKey(subtype);
+    public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
+        Log.i ("--->", "onCurrentInputMethodSubtypeChanged ");
+        kv.setSubtypeOnSpaceKey(subtype);
     }
 
     /**
@@ -270,13 +279,6 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
             kv.closing();
         }
     }
-
-    @Override
-    public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
-        Log.i ("--->", "onCurrentInputMethodSubtypeChanged ");
-        kv.setSubtypeOnSpaceKey(subtype);
-    }
-
 
     /**
      * Deal with the editor reporting movement of its cursor.
@@ -667,8 +669,9 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
 
     private void handleLanguageSwitch() {
         Log.i ("--->", "handleLanguageSwitch ");
-        mInputMethodManager.switchToNextInputMethod(getToken(), false /* onlyCurrentIme */);
+        mInputMethodManager.switchToNextInputMethod(getToken(), true /* onlyCurrentIme */);
     }
+
 
     private IBinder getToken() {
         Log.i ("--->", "getToken ");
@@ -734,7 +737,6 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
             pickDefaultCandidate();
         }
     }
-
 
     @Override
     public void onPress(int primaryCode) {
@@ -812,7 +814,6 @@ public class EmojiSpaceIMEService extends InputMethodService implements Keyboard
     public void swipeLeft() {
 
     }
-
 
     @Override
     public void swipeDown() {
