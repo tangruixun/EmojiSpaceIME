@@ -11,8 +11,11 @@
 
 
         <!-- Declares the input method service -->
+
+        <!-- Optional: an activity for controlling the IME settings -->
+        <!-- Declares the input method service -->
         <service
-            android:name=".EmojiSpaceIMEService"
+            android:name=".IMEService"
             android:enabled="true"
             android:exported="true"
             android:label="@string/emojispace_input_label"
@@ -25,14 +28,6 @@
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
-
-        <!-- Optional: an activity for controlling the IME settings -->
-        <activity android:name=".EmojiSpaceIMESettings"
-            android:label="@string/emoji_input_settings">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

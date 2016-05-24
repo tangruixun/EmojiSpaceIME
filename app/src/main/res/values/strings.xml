@@ -1,15 +1,6 @@
 <resources>
-    <string name="app_name">Emoji Spaces IME</string>
-    <string name="emojispace_input_label">Emoji Space IME</string>
-    <string name="emoji_input_settings">Emoji Space Input Settings</string>
+    <string name="app_name">Emoji IME</string>
+    <string name="emojispace_input_label">Emoji IME</string>
+    <string name="simple_ime">Simple IME</string>
     <string name="subtype_en_US">English (US)</string>
-    <string name="settings_name">Keyboard Settings</string>
-
-    <!-- Labels on soft keys -->
-    <string name="label_go_key">Go</string>
-    <string name="label_next_key">Next</string>
-    <string name="label_send_key">Send</string>
-    <string name="word_separators"><![CDATA[\\u0020.,;:!?\\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;]]></string>
-    <string name="language_selection_title">Language selection</string>
-    <string name="select_language">select language</string>
 </resources>
