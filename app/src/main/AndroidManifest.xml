@@ -9,10 +9,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
-        <!-- Declares the input method service -->
-
-        <!-- Optional: an activity for controlling the IME settings -->
         <!-- Declares the input method service -->
         <service
             android:name=".IMEService"
@@ -28,6 +24,15 @@
                 android:name="android.view.im"
                 android:resource="@xml/method" />
         </service>
+
+        <!-- Optional: an activity for controlling the IME settings -->
+        <activity
+            android:name=".EmojiSpaceIMESettings"
+            android:label="@string/emojispace_input_settings_label">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

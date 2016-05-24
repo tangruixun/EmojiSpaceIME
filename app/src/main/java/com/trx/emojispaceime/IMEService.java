@@ -18,18 +18,24 @@ public class IMEService extends InputMethodService
     public static final int KEYCODE_SYMBOLKEYBOARD = -2;
     public static final int KEYCODE_LANGUAGESWITCH = -101;
     int layoutIndex = 0;
-    final int [] LayoutArray = {R.xml.qwerty, R.xml.symbols, R.xml.symbols_shift};
 
     private KeyboardView kv;
+    private Keyboard qwertyKeyboard;
+    private Keyboard symbolKeyboard;
+    private Keyboard symbolShiftedKeyboard;
     private Keyboard keyboard;
 
     private boolean caps = false;
 
     @Override
     public View onCreateInputView() {
+        final int [] LayoutArray = {R.xml.qwerty, R.xml.symbols, R.xml.symbols_shift};
         layoutIndex = 0;
         kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboardview, null);
-        keyboard = new Keyboard(this, LayoutArray[0]);
+        qwertyKeyboard = new Keyboard(this, LayoutArray[0]);
+        symbolKeyboard = new Keyboard(this, LayoutArray[1]);
+        symbolShiftedKeyboard = new Keyboard(this, LayoutArray[2]);
+        keyboard = qwertyKeyboard;
         kv.setKeyboard(keyboard);
         kv.setOnKeyboardActionListener(this);
         return kv;
@@ -44,17 +50,27 @@ public class IMEService extends InputMethodService
                 ic.deleteSurroundingText(1, 0);
                 break;
             case Keyboard.KEYCODE_SHIFT:
-                caps = !caps;
-                keyboard.setShifted(caps);
+                if (kv.getKeyboard() == qwertyKeyboard) {
+                    caps = !caps;
+                    keyboard.setShifted(caps);
+                } else if (kv.getKeyboard() == symbolKeyboard) {
+                    keyboard = symbolShiftedKeyboard;
+                    kv.setKeyboard(keyboard);
+                } else if (kv.getKeyboard() == symbolShiftedKeyboard) {
+                    keyboard = symbolKeyboard;
+                    kv.setKeyboard(keyboard);
+                }
                 kv.invalidateAllKeys();
                 break;
             case Keyboard.KEYCODE_DONE:
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
                 break;
             case KEYCODE_SYMBOLKEYBOARD:
-                layoutIndex ++;
-                layoutIndex %= 3;
-                keyboard = new Keyboard(this, LayoutArray [layoutIndex]);
+                if (kv.getKeyboard() == qwertyKeyboard) {
+                    keyboard = symbolKeyboard;
+                } else {
+                    keyboard = qwertyKeyboard;
+                }
                 kv.setKeyboard(keyboard);
                 kv.invalidateAllKeys();
                 break;
