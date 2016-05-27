@@ -64,4 +64,6 @@
     <string name="emoji_picker_key">emoji_picker_key</string>
     <string name="emoji_picker_title">Pick Emoji for space bar</string>
     <string name="desc_emoji_item">emoji_item</string>
+    <string name="space_bar_setting_title">Space Bar Settings</string>
+    <string name="space_string_place_holder">[SPACE]</string>
 </resources>

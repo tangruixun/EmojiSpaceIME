@@ -2,13 +2,13 @@ package com.trx.emojispaceime;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,11 +17,13 @@ import java.util.List;
 public class EmojiAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<EmojiItem> emojiList;
+    private List<EmojiItem> emojiList;
+    private LayoutInflater mInflater;
 
     public EmojiAdapter(Activity activity, List<EmojiItem> emojiList) {
         context = activity;
-        emojiList = this.emojiList;
+        this.emojiList = emojiList;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -41,15 +43,18 @@ public class EmojiAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
-        {
-            LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.emojiitem_layout, null);
+        Log.i ("--->", "position:" + position);
+        Log.i ("--->", "getUnicode_point:" + emojiList.get(position).getUnicode_point());
+        if (convertView == null) {
+            convertView = mInflater.inflate(R.layout.emojiitem_layout, parent, false);
         }
 
         TextView emojiView = (TextView) convertView.findViewById(R.id.emoji_item);
-        emojiView.setText(new String (Character.toChars(emojiList.get(position).getUnicode_point())));
-
+        if (emojiList.get(position).getUnicode_point() == 32) {
+            emojiView.setText(context.getString(R.string.space_string_place_holder));
+        } else {
+            emojiView.setText(new String (Character.toChars(emojiList.get(position).getUnicode_point())));
+        }
         return convertView;
     }
 }

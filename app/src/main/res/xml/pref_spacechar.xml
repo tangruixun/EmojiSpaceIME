@@ -1,5 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Timer Settings" android:key="TARGET_CATEGORY">
+    <PreferenceCategory android:title="@string/space_bar_setting_title" android:key="TARGET_CATEGORY">
         <!-- A 'parent' preference, which enables/disables child preferences (below)
         when checked/unchecked. -->
     </PreferenceCategory>

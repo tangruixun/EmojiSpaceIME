@@ -4,6 +4,7 @@ package com.trx.emojispaceime;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -13,14 +14,19 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +90,9 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
                     }
                 }
 
+            } else if (preference instanceof EmojiSpacePreference) {
+                preference.setSummary(stringValue);
+
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -115,6 +124,8 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
         // Set the listener to watch for value changes.
         preference.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 
+        Log.i("--->", "preference key: " + preference.getKey());
+        //Log.i("--->", "preference value: " + PreferenceManager.getDefaultSharedPreferences(preference.getContext()).getString(preference.getKey(), ""));
         // Trigger the listener immediately with the preference's
         // current value.
         sBindPreferenceSummaryToValueListener.onPreferenceChange(preference,
@@ -176,77 +187,75 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class SpaceCharSelectionPreferenceFragment extends PreferenceFragment {
+        AlertDialog alertDialog;
+        //SharedPreferences sharedPreferences = SharedPreferences.
+        List<EmojiItem> emojiList = new ArrayList<>();
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_spacechar);
             setHasOptionsMenu(true);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            AlertDialog alertDialog;
-            GridView emojiGridView = new GridView(getActivity());
-
-            List<EmojiItem> emojiList = new ArrayList<>();
-            EmojiItem emojiItem = new EmojiItem();
-            emojiItem.setUnicode_point(32); // Space
-            emojiList.add(emojiItem);
-            for (int i = EMOTICON_UNICODE_BEGIN; i<=EMOTICON_UNICODE_END; i++) {
-                emojiItem.setUnicode_point(i);
-                emojiList.add(emojiItem);
-            }
-
-            EmojiAdapter emojiAdapter = new EmojiAdapter(getActivity(), emojiList);
-            emojiGridView.setAdapter(emojiAdapter);
-
-            emojiGridView.setNumColumns(8);               // Number of columns
-            emojiGridView.setChoiceMode(GridView.CHOICE_MODE_SINGLE);       // Choice mode
-
-            /*
-            emojiGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    // do something here
-                    Toast.makeText(getActivity(), "Position: " + position, Toast.LENGTH_SHORT).show();
-                    iconDialog.dismiss(); // Dismiss dialog after click on item
-                }
-            });*/
-            builder.setView(emojiGridView);
-            builder.setTitle(R.string.emoji_picker_title);
-            alertDialog = builder.create();
-            alertDialog.show();
-
-
-
-/*
-            ListPreference emojiListPref = new ListPreference(getActivity());
-            List<String> emojiEntries = new ArrayList<>();
-            List<String> emojiEntryValues = new ArrayList<>();
-            emojiEntries.add("Space");
-            emojiEntryValues.add(String.valueOf(32));
-
-            emojiListPref.setKey(getString(R.string.emoji_picker_key));
-            emojiListPref.setTitle(R.string.emoji_picker_title);
-            for (int i = EMOTICON_UNICODE_BEGIN; i<=EMOTICON_UNICODE_END; i++) {
-                emojiEntries.add(getEmojiByUnicode(i));
-                emojiEntryValues.add(String.valueOf(i));
-            }
-            emojiListPref.setEntries(emojiEntries.toArray(new CharSequence[emojiEntries.size()]));
-            emojiListPref.setEntryValues(emojiEntryValues.toArray(new CharSequence[emojiEntryValues.size()]));
-
-
-            // Get the Preference Category which we want to add the ListPreference to
+            EmojiSpacePreference emojipref = new EmojiSpacePreference(getActivity());
             PreferenceCategory targetCategory = (PreferenceCategory) findPreference("TARGET_CATEGORY");
-            targetCategory.addPreference(emojiListPref);
-            targetCategory.addPreference();
-*/
+            targetCategory.addPreference(emojipref);
+            emojipref.setKey(getString(R.string.emoji_picker_key));
 
+            emojipref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-            //bindPreferenceSummaryToValue(findPreference("example_text"));
-            bindPreferenceSummaryToValue(findPreference(getString(R.string.emoji_picker_key)));
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    GridView emojiGridView = new GridView(getActivity());
+
+                    emojiList.clear();
+                    EmojiItem emojiItem = new EmojiItem();
+                    emojiItem.setUnicode_point(32); // Space
+                    emojiList.add(emojiItem);
+                    for (int i = EMOTICON_UNICODE_BEGIN; i<=EMOTICON_UNICODE_END; i++) {
+                        emojiItem = new EmojiItem();
+                        emojiItem.setUnicode_point(i);
+                        emojiList.add(emojiItem);
+                    }
+
+                    Log.i ("--->", "size: "+ emojiList.size());
+                    EmojiAdapter emojiAdapter = new EmojiAdapter(getActivity(), emojiList);
+                    emojiGridView.setAdapter(emojiAdapter);
+
+                    emojiGridView.setNumColumns(8);               // Number of columns
+                    emojiGridView.setChoiceMode(GridView.CHOICE_MODE_SINGLE);       // Choice mode
+
+                    emojiGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            // do something here
+                            String strEmoji = new String(Character.toChars(emojiList.get (position).getUnicode_point()));
+                            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                            //SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPref.edit();
+                            editor.putString(getString(R.string.emoji_picker_key), strEmoji);
+                            editor.apply();
+
+                            Toast.makeText(getActivity(), " " + strEmoji + " ", Toast.LENGTH_SHORT).show();
+                            alertDialog.dismiss(); // Dismiss dialog after click on item
+
+                            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+                            // to their values. When their values change, their summaries are
+                            // updated to reflect the new value, per the Android Design
+                            // guidelines.
+                            bindPreferenceSummaryToValue(findPreference(getString(R.string.emoji_picker_key)));
+                        }
+                    });
+                    builder.setView(emojiGridView);
+                    builder.setTitle(R.string.emoji_picker_title);
+                    alertDialog = builder.create();
+                    alertDialog.show();
+
+                    return true;
+                }
+            });
         }
 
         @Override
@@ -257,11 +266,6 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
-        }
-
-
-        public String getEmojiByUnicode(int unicode){
-            return new String(Character.toChars(unicode));
         }
     }
 
