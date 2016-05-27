@@ -1,9 +1,11 @@
 package com.trx.emojispaceime;
 
+import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioManager;
+import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputConnection;
@@ -17,6 +19,7 @@ public class IMEService extends InputMethodService
 
     public static final int KEYCODE_SYMBOLKEYBOARD = -2;
     public static final int KEYCODE_LANGUAGESWITCH = -101;
+    public static final int KEYCODE_SPACE = 32;
     int layoutIndex = 0;
 
     private KeyboardView kv;
@@ -77,6 +80,11 @@ public class IMEService extends InputMethodService
             case KEYCODE_LANGUAGESWITCH:
                 InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
                 imeManager.showInputMethodPicker();
+                break;
+            case KEYCODE_SPACE:
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+                CharSequence spaceCharacter = sharedPref.getString(getString(R.string.emoji_picker_key), " ");
+                ic.commitText(spaceCharacter, 1);
                 break;
             default:
                 char code = (char)primaryCode;
