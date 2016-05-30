@@ -6,9 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -20,7 +17,6 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,6 +67,7 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
             } else if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
                 // using RingtoneManager.
+                /*
                 if (TextUtils.isEmpty(stringValue)) {
                     // Empty values correspond to 'silent' (no ringtone).
                     preference.setSummary(R.string.pref_ringtone_silent);
@@ -88,11 +85,10 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
                         String name = ringtone.getTitle(preference.getContext());
                         preference.setSummary(name);
                     }
-                }
+                }*/
 
             } else if (preference instanceof EmojiSpacePreference) {
                 preference.setSummary(stringValue);
-
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -233,7 +229,6 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
                             // do something here
                             String strEmoji = new String(Character.toChars(emojiList.get (position).getUnicode_point()));
                             SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                            //SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = sharedPref.edit();
                             editor.putString(getString(R.string.emoji_picker_key), strEmoji);
                             editor.apply();
@@ -269,6 +264,7 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * This fragment shows notification preferences only. It is used when the
      * activity is showing a two-pane settings UI.
@@ -278,14 +274,14 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_notification);
+            addPreferencesFromResource(R.xml.pref_clicksound);
             setHasOptionsMenu(true);
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            // bindPreferenceSummaryToValue(findPreference("pref_press_button_sound_key"));
         }
 
         @Override
@@ -297,7 +293,10 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
+
     }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * This fragment shows data and sync preferences only. It is used when the

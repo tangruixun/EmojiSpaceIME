@@ -1,10 +1,12 @@
 package com.trx.emojispaceime;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.media.AudioManager;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,12 +19,15 @@ import android.view.inputmethod.InputMethodManager;
 public class IMEService extends InputMethodService
         implements KeyboardView.OnKeyboardActionListener {
 
+    SharedPreferences preferences;
+    Context context;
+
     public static final int KEYCODE_SYMBOLKEYBOARD = -2;
     public static final int KEYCODE_LANGUAGESWITCH = -101;
     public static final int KEYCODE_SPACE = 32;
     int layoutIndex = 0;
 
-    private KeyboardView kv;
+    private MyKeyboardView kv;
     private Keyboard qwertyKeyboard;
     private Keyboard symbolKeyboard;
     private Keyboard symbolShiftedKeyboard;
@@ -33,8 +38,11 @@ public class IMEService extends InputMethodService
     @Override
     public View onCreateInputView() {
         final int [] LayoutArray = {R.xml.qwerty, R.xml.symbols, R.xml.symbols_shift};
+        context = getApplicationContext();
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
         layoutIndex = 0;
-        kv = (KeyboardView)getLayoutInflater().inflate(R.layout.keyboardview, null);
+        kv = (MyKeyboardView) getLayoutInflater().inflate(R.layout.keyboardview, null);
         qwertyKeyboard = new Keyboard(this, LayoutArray[0]);
         symbolKeyboard = new Keyboard(this, LayoutArray[1]);
         symbolShiftedKeyboard = new Keyboard(this, LayoutArray[2]);
@@ -47,7 +55,16 @@ public class IMEService extends InputMethodService
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
         InputConnection ic = getCurrentInputConnection();
-        playClick(primaryCode);
+        boolean nClickSound = preferences.getBoolean(getString(R.string.pref_press_button_sound_key), true);
+        boolean nClickVibrate = preferences.getBoolean(getString(R.string.pref_press_button_vibrate_key), true);
+        if (nClickSound) {
+            playClick(primaryCode);
+        }
+        if (nClickVibrate) {
+            Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+            // Vibrate for 500 milliseconds
+            v.vibrate(100);
+        }
         switch(primaryCode){
             case Keyboard.KEYCODE_DELETE :
                 ic.deleteSurroundingText(1, 0);
@@ -82,8 +99,7 @@ public class IMEService extends InputMethodService
                 imeManager.showInputMethodPicker();
                 break;
             case KEYCODE_SPACE:
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-                CharSequence spaceCharacter = sharedPref.getString(getString(R.string.emoji_picker_key), " ");
+                CharSequence spaceCharacter = preferences.getString(getString(R.string.emoji_picker_key), " ");
                 ic.commitText(spaceCharacter, 1);
                 break;
             default:

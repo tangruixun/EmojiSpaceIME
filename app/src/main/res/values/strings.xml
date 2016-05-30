@@ -54,16 +54,14 @@
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
+    <string name="pref_title_press_button_sound">Press Button Sound</string>
     <string name="pref_title_vibrate">Vibrate</string>
+
     <string name="emoji_picker_key">emoji_picker_key</string>
     <string name="emoji_picker_title">Pick Emoji for space bar</string>
     <string name="desc_emoji_item">emoji_item</string>
     <string name="space_bar_setting_title">Space Bar Settings</string>
     <string name="space_string_place_holder">[SPACE]</string>
+    <string name="pref_press_button_sound_key">pref_press_button_sound_key</string>
+    <string name="pref_press_button_vibrate_key">pref_press_button_vibrate_key</string>
 </resources>
