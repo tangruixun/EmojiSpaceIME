@@ -186,6 +186,7 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
         AlertDialog alertDialog;
         //SharedPreferences sharedPreferences = SharedPreferences.
         List<EmojiItem> emojiList = new ArrayList<>();
+        EmojiSpacePreference emojipref;
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -193,7 +194,7 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
             addPreferencesFromResource(R.xml.pref_spacechar);
             setHasOptionsMenu(true);
 
-            EmojiSpacePreference emojipref = new EmojiSpacePreference(getActivity());
+            emojipref = new EmojiSpacePreference(getActivity());
             PreferenceCategory targetCategory = (PreferenceCategory) findPreference("TARGET_CATEGORY");
             targetCategory.addPreference(emojipref);
             emojipref.setKey(getString(R.string.emoji_picker_key));
@@ -261,6 +262,20 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+
+        /**
+         * Called when the fragment is visible to the user and actively running.
+         * This is generally
+         * tied to {@link //Activity#onResume() Activity.onResume} of the containing
+         * Activity's lifecycle.
+         */
+        @Override
+        public void onResume() {
+            super.onResume();
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String strEmoji = sharedPref.getString(getString(R.string.emoji_picker_key), " ");
+            emojipref.setSummary(strEmoji);
         }
     }
 

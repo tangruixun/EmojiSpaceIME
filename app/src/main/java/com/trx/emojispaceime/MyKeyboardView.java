@@ -31,10 +31,12 @@ public class MyKeyboardView extends KeyboardView {
 
         List<Keyboard.Key> keys = getKeyboard().getKeys();
         for(Keyboard.Key key : keys) {
-            if(key.label == " " && spaceCharacter != " ") {
-                key.label = spaceCharacter;
-                //invalidateKey (32);
-                invalidateAllKeys();
+            if (key.label != null) {
+                if(key.label.toString().equals(" ") && spaceCharacter != " ") {
+                    key.label = spaceCharacter;
+                    //invalidateKey (32);
+                    invalidateAllKeys();
+                }
             }
         }
     }

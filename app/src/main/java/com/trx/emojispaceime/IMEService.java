@@ -63,7 +63,7 @@ public class IMEService extends InputMethodService
         if (nClickVibrate) {
             Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
             // Vibrate for 500 milliseconds
-            v.vibrate(100);
+            v.vibrate(10);
         }
         switch(primaryCode){
             case Keyboard.KEYCODE_DELETE :
