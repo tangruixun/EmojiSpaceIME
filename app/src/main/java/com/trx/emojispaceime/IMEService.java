@@ -10,8 +10,11 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
+
+import java.util.List;
 
 /**
  * Created by TRX on 05/23/2016.
@@ -52,6 +55,33 @@ public class IMEService extends InputMethodService
         return kv;
     }
 
+    /**
+     * Called when the input view is being shown and input has started on
+     * a new editor.  This will always be called after {@link #onStartInput},
+     * allowing you to do your general setup there and just view-specific
+     * setup here.  You are guaranteed that {@link #onCreateInputView()} will
+     * have been called some time before this function is called.
+     *
+     * @param info       Description of the type of text being edited.
+     * @param restarting Set to true if we are restarting input on the
+     */
+    @Override
+    public void onStartInputView(EditorInfo info, boolean restarting) {
+        super.onStartInputView(info, restarting);
+
+        CharSequence spaceCharacter = preferences.getString(getString(R.string.emoji_picker_key), " ");
+        List<Keyboard.Key> keys = kv.getKeyboard().getKeys();
+        for(Keyboard.Key key : keys) {
+            if (key.label != null) {
+                if(key.label.toString().equals(" ") && spaceCharacter != " ") {
+                    key.label = spaceCharacter;
+                    //invalidateKey (32);
+                    kv.invalidateAllKeys();
+                }
+            }
+        }
+    }
+
     @Override
     public void onKey(int primaryCode, int[] keyCodes) {
         InputConnection ic = getCurrentInputConnection();
@@ -59,11 +89,13 @@ public class IMEService extends InputMethodService
         boolean nClickVibrate = preferences.getBoolean(getString(R.string.pref_press_button_vibrate_key), true);
         if (nClickSound) {
             playClick(primaryCode);
-        }
-        if (nClickVibrate) {
-            Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            // Vibrate for 500 milliseconds
-            v.vibrate(10);
+            if (nClickVibrate) {
+                if (primaryCode != Keyboard.KEYCODE_DELETE) {
+                    Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    // Vibrate for 30 milliseconds
+                    v.vibrate(30);
+                }
+            }
         }
         switch(primaryCode){
             case Keyboard.KEYCODE_DELETE :
