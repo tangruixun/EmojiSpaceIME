@@ -32,25 +32,45 @@ public class IMEService extends InputMethodService
 
     private MyKeyboardView kv;
     private Keyboard qwertyKeyboard;
+    private Keyboard dvorakKeyboard;
+    private Keyboard colemakKeyboard;
+    private Keyboard maltronKeyboard;
+    private Keyboard neoKeyboard;
+    private Keyboard hcesarKeyboard;
+
     private Keyboard symbolKeyboard;
     private Keyboard symbolShiftedKeyboard;
-    private Keyboard keyboard;
+    private Keyboard primaryKeyboard;
 
     private boolean caps = false;
 
     @Override
     public View onCreateInputView() {
-        final int [] LayoutArray = {R.xml.qwerty, R.xml.symbols, R.xml.symbols_shift};
+        final int [] LayoutArray = {R.xml.qwerty, R.xml.dvorak, R.xml.colemak, R.xml.maltron, R.xml.neo};
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         layoutIndex = 0;
         kv = (MyKeyboardView) getLayoutInflater().inflate(R.layout.keyboardview, null);
         qwertyKeyboard = new Keyboard(this, LayoutArray[0]);
-        symbolKeyboard = new Keyboard(this, LayoutArray[1]);
-        symbolShiftedKeyboard = new Keyboard(this, LayoutArray[2]);
-        keyboard = qwertyKeyboard;
-        kv.setKeyboard(keyboard);
+        dvorakKeyboard = new Keyboard(this, LayoutArray[1]);
+        colemakKeyboard = new Keyboard(this, LayoutArray[2]);
+        maltronKeyboard = new Keyboard(this, LayoutArray[3]);
+        neoKeyboard = new Keyboard(this, LayoutArray[4]);
+        hcesarKeyboard = new Keyboard(this, LayoutArray[5]);
+
+        symbolKeyboard = new Keyboard(this, R.xml.symbols);
+        symbolShiftedKeyboard = new Keyboard(this, R.xml.symbols_shift);
+
+        int layout = Integer.valueOf(preferences.getString(getString(R.string.pref_alter_layout_key), "1"));
+        if (layout == 1) {
+            primaryKeyboard = qwertyKeyboard;
+        } else if (layout == 2) {
+            primaryKeyboard = dvorakKeyboard;
+        } else if (layout == 3) {
+            primaryKeyboard = colemakKeyboard;
+        }
+        kv.setKeyboard(primaryKeyboard);
         kv.setOnKeyboardActionListener(this);
         return kv;
     }
@@ -68,6 +88,18 @@ public class IMEService extends InputMethodService
     @Override
     public void onStartInputView(EditorInfo info, boolean restarting) {
         super.onStartInputView(info, restarting);
+
+        int layout = Integer.valueOf(preferences.getString(getString(R.string.pref_alter_layout_key), "1"));
+        if (layout == 1) {
+            primaryKeyboard = qwertyKeyboard;
+        } else if (layout == 2) {
+            primaryKeyboard = dvorakKeyboard;
+        } else if (layout == 3) {
+            primaryKeyboard = colemakKeyboard;
+        }
+        if (kv.getKeyboard() != primaryKeyboard) {
+            kv.setKeyboard(primaryKeyboard);
+        }
 
         CharSequence spaceCharacter = preferences.getString(getString(R.string.emoji_picker_key), " ");
         List<Keyboard.Key> keys = kv.getKeyboard().getKeys();
@@ -102,15 +134,18 @@ public class IMEService extends InputMethodService
                 ic.deleteSurroundingText(1, 0);
                 break;
             case Keyboard.KEYCODE_SHIFT:
-                if (kv.getKeyboard() == qwertyKeyboard) {
+                if (kv.getKeyboard() == qwertyKeyboard
+                        || kv.getKeyboard() == dvorakKeyboard
+                        || kv.getKeyboard() == colemakKeyboard
+                        || kv.getKeyboard() == maltronKeyboard
+                        || kv.getKeyboard() == neoKeyboard
+                        || kv.getKeyboard() == hcesarKeyboard ) {
                     caps = !caps;
-                    keyboard.setShifted(caps);
+                    primaryKeyboard.setShifted(caps);
                 } else if (kv.getKeyboard() == symbolKeyboard) {
-                    keyboard = symbolShiftedKeyboard;
-                    kv.setKeyboard(keyboard);
+                    kv.setKeyboard(symbolShiftedKeyboard);
                 } else if (kv.getKeyboard() == symbolShiftedKeyboard) {
-                    keyboard = symbolKeyboard;
-                    kv.setKeyboard(keyboard);
+                    kv.setKeyboard(symbolKeyboard);
                 }
                 kv.invalidateAllKeys();
                 break;
@@ -118,12 +153,16 @@ public class IMEService extends InputMethodService
                 ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
                 break;
             case KEYCODE_SYMBOLKEYBOARD:
-                if (kv.getKeyboard() == qwertyKeyboard) {
-                    keyboard = symbolKeyboard;
+                if (kv.getKeyboard() == qwertyKeyboard
+                        || kv.getKeyboard() == dvorakKeyboard
+                        || kv.getKeyboard() == colemakKeyboard
+                        || kv.getKeyboard() == maltronKeyboard
+                        || kv.getKeyboard() == neoKeyboard
+                        || kv.getKeyboard() == hcesarKeyboard) {
+                    kv.setKeyboard(symbolKeyboard);
                 } else {
-                    keyboard = qwertyKeyboard;
+                    kv.setKeyboard(primaryKeyboard);
                 }
-                kv.setKeyboard(keyboard);
                 kv.invalidateAllKeys();
                 break;
             case KEYCODE_LANGUAGESWITCH:

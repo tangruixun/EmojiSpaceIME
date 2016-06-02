@@ -1,53 +1,35 @@
 <resources>
-    <string name="app_name">Emoji Space IME</string>
-    <string name="emojispace_input_label">Emoji Space IME</string>
-    <string name="subtype_en_US">English・Emoji</string>
+    <string name="app_name">Alternative Keyboards &amp; Emoji Spacebar</string>
+    <string name="emojispace_input_label">Alternative Layout keyboards and Emoji Space Bar IME</string>
+    <string name="subtype_en_US">English・Symbols・Emoji</string>
     <string name="emojispace_input_settings_label">Settings</string>
-
-
-
 
     <!-- Strings related to Settings -->
     <!-- Example General settings -->
-    <string name="pref_header_spaceemoji">Space Emoji</string>
+    <string name="pref_header_spaceemoji">Space Bar Setting</string>
 
-    <string name="pref_title_space_emoji">Select Emoji for Space</string>
-    <string name="pref_space_emoji">Make Space becomes emoji</string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
+    <string name="pref_title_space_emoji">Select Emoji for Space Bar</string>
+    <string name="pref_space_emoji">Make Space bar becomes emojies</string>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
+    <string name="pref_header_alter_layout">Alter Layout Setting</string>
 
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
+    <string name="pref_title_alter_layout">Alter Layout</string>
+    <string-array name="pref_alter_layout_titles">
+        <item>Qwerty</item>
+        <item>Dvorak-like</item>
+        <item>Colemak-like</item>
+        <item>Maltron-like</item>
+        <item>Neo-like</item>
+        <item>HCESAR</item>
     </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
+    <string-array name="pref_alter_layout_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
     </string-array>
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
@@ -60,8 +42,10 @@
     <string name="emoji_picker_key">emoji_picker_key</string>
     <string name="emoji_picker_title">Pick Emoji for space bar</string>
     <string name="desc_emoji_item">emoji_item</string>
-    <string name="space_bar_setting_title">Space Bar Settings</string>
-    <string name="space_string_place_holder">[SPACE]</string>
+    <string name="space_bar_setting_title">Space Bar Setting</string>
+    <string name="space_string_place_holder"> </string>
     <string name="pref_press_button_sound_key">pref_press_button_sound_key</string>
     <string name="pref_press_button_vibrate_key">pref_press_button_vibrate_key</string>
+    <string name="pref_alter_layout_key">pref_alter_layout_key</string>
+    <string name="pref_header_about">About</string>
 </resources>
