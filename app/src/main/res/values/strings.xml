@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Alternative Keyboards &amp; Emoji Spacebar</string>
-    <string name="emojispace_input_label">Alternative Layout keyboards and Emoji Space Bar IME</string>
+    <string name="app_name">Keyboards &amp; Emoji Spacebar</string>
+    <string name="emojispace_input_label">Keyboards and Emoji Bar</string>
     <string name="subtype_en_US">English・Symbols・Emoji</string>
     <string name="emojispace_input_settings_label">Settings</string>
 
@@ -8,13 +8,13 @@
     <!-- Example General settings -->
     <string name="pref_header_spaceemoji">Space Bar Setting</string>
 
-    <string name="pref_title_space_emoji">Select Emoji for Space Bar</string>
-    <string name="pref_space_emoji">Make Space bar becomes emojies</string>
+    <string name="pref_title_space_emoji">Select for Space Bar :-)</string>
+    <string name="pref_space_emoji">Make Space bar becomes emoji</string>
 
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_alter_layout">Alter Layout Setting</string>
+    <string name="pref_header_alter_layout">Layout Setting</string>
 
-    <string name="pref_title_alter_layout">Alter Layout</string>
+    <string name="pref_title_alter_layout">Layout</string>
     <string-array name="pref_alter_layout_titles">
         <item>Qwerty</item>
         <item>Dvorak-like</item>
@@ -22,8 +22,10 @@
         <item>Maltron-like</item>
         <item>Neo-like</item>
         <item>HCESAR</item>
+        <item>FITALY</item>
     </string-array>
     <string-array name="pref_alter_layout_values">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>

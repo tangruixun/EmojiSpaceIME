@@ -28,7 +28,6 @@ public class IMEService extends InputMethodService
     public static final int KEYCODE_SYMBOLKEYBOARD = -2;
     public static final int KEYCODE_LANGUAGESWITCH = -101;
     public static final int KEYCODE_SPACE = 32;
-    int layoutIndex = 0;
 
     private MyKeyboardView kv;
     private Keyboard qwertyKeyboard;
@@ -37,6 +36,7 @@ public class IMEService extends InputMethodService
     private Keyboard maltronKeyboard;
     private Keyboard neoKeyboard;
     private Keyboard hcesarKeyboard;
+    private Keyboard fitalyKeyboard;
 
     private Keyboard symbolKeyboard;
     private Keyboard symbolShiftedKeyboard;
@@ -46,11 +46,10 @@ public class IMEService extends InputMethodService
 
     @Override
     public View onCreateInputView() {
-        final int [] LayoutArray = {R.xml.qwerty, R.xml.dvorak, R.xml.colemak, R.xml.maltron, R.xml.neo};
+        final int [] LayoutArray = {R.xml.qwerty, R.xml.dvorak, R.xml.colemak, R.xml.maltron, R.xml.neo, R.xml.hcesar, R.xml.fitaly};
         context = getApplicationContext();
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        layoutIndex = 0;
         kv = (MyKeyboardView) getLayoutInflater().inflate(R.layout.keyboardview, null);
         qwertyKeyboard = new Keyboard(this, LayoutArray[0]);
         dvorakKeyboard = new Keyboard(this, LayoutArray[1]);
@@ -58,19 +57,30 @@ public class IMEService extends InputMethodService
         maltronKeyboard = new Keyboard(this, LayoutArray[3]);
         neoKeyboard = new Keyboard(this, LayoutArray[4]);
         hcesarKeyboard = new Keyboard(this, LayoutArray[5]);
+        fitalyKeyboard = new Keyboard(this, LayoutArray[6]);
 
         symbolKeyboard = new Keyboard(this, R.xml.symbols);
         symbolShiftedKeyboard = new Keyboard(this, R.xml.symbols_shift);
 
         int layout = Integer.valueOf(preferences.getString(getString(R.string.pref_alter_layout_key), "1"));
-        if (layout == 1) {
+        if (layout == 0) {
             primaryKeyboard = qwertyKeyboard;
-        } else if (layout == 2) {
+        } else if (layout == 1) {
             primaryKeyboard = dvorakKeyboard;
-        } else if (layout == 3) {
+        } else if (layout == 2) {
             primaryKeyboard = colemakKeyboard;
+        } else if (layout == 3) {
+            primaryKeyboard = maltronKeyboard;
+        } else if (layout == 4) {
+            primaryKeyboard = neoKeyboard;
+        } else if (layout == 5) {
+            primaryKeyboard = hcesarKeyboard;
+        } else if (layout == 6) {
+            primaryKeyboard = fitalyKeyboard;
         }
+
         kv.setKeyboard(primaryKeyboard);
+        kv.invalidateAllKeys();
         kv.setOnKeyboardActionListener(this);
         return kv;
     }
@@ -90,15 +100,24 @@ public class IMEService extends InputMethodService
         super.onStartInputView(info, restarting);
 
         int layout = Integer.valueOf(preferences.getString(getString(R.string.pref_alter_layout_key), "1"));
-        if (layout == 1) {
+        if (layout == 0) {
             primaryKeyboard = qwertyKeyboard;
-        } else if (layout == 2) {
+        } else if (layout == 1) {
             primaryKeyboard = dvorakKeyboard;
-        } else if (layout == 3) {
+        } else if (layout == 2) {
             primaryKeyboard = colemakKeyboard;
+        } else if (layout == 3) {
+            primaryKeyboard = maltronKeyboard;
+        } else if (layout == 4) {
+            primaryKeyboard = neoKeyboard;
+        } else if (layout == 5) {
+            primaryKeyboard = hcesarKeyboard;
+        } else if (layout == 6) {
+            primaryKeyboard = fitalyKeyboard;
         }
         if (kv.getKeyboard() != primaryKeyboard) {
             kv.setKeyboard(primaryKeyboard);
+            kv.invalidateAllKeys();
         }
 
         CharSequence spaceCharacter = preferences.getString(getString(R.string.emoji_picker_key), " ");
@@ -139,7 +158,8 @@ public class IMEService extends InputMethodService
                         || kv.getKeyboard() == colemakKeyboard
                         || kv.getKeyboard() == maltronKeyboard
                         || kv.getKeyboard() == neoKeyboard
-                        || kv.getKeyboard() == hcesarKeyboard ) {
+                        || kv.getKeyboard() == hcesarKeyboard
+                        || kv.getKeyboard() == fitalyKeyboard ) {
                     caps = !caps;
                     primaryKeyboard.setShifted(caps);
                 } else if (kv.getKeyboard() == symbolKeyboard) {
@@ -158,7 +178,8 @@ public class IMEService extends InputMethodService
                         || kv.getKeyboard() == colemakKeyboard
                         || kv.getKeyboard() == maltronKeyboard
                         || kv.getKeyboard() == neoKeyboard
-                        || kv.getKeyboard() == hcesarKeyboard) {
+                        || kv.getKeyboard() == hcesarKeyboard
+                        || kv.getKeyboard() == fitalyKeyboard ) {
                     kv.setKeyboard(symbolKeyboard);
                 } else {
                     kv.setKeyboard(primaryKeyboard);
