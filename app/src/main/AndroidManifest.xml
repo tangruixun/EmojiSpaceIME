@@ -35,6 +35,15 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/pref_title_about_info">
+            <intent-filter>
+                <action android:name="com.trx.emojispaceime.EmojiSpaceIMESettings" />
+                <action android:name="com.trx.emojispaceime.AboutActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

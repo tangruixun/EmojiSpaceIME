@@ -15,8 +15,7 @@
         <Key android:codes="55" android:keyLabel="7" android:popupKeyboard="@xml/popupview" android:popupCharacters="ⅶ፯٧۷৭七柒칠"/>
         <Key android:codes="56" android:keyLabel="8" android:popupKeyboard="@xml/popupview" android:popupCharacters="ⅷ٨፰৮八捌팔८"/>
         <Key android:codes="57" android:keyLabel="9" android:popupKeyboard="@xml/popupview" android:popupCharacters="ⅸ፱٩Թ৯九玖구"/>
-        <Key android:codes="48" android:keyLabel="0" android:popupKeyboard="@xml/popupview" android:popupCharacters="٠०〇零영무០๐"/>
-        <Key android:codes="-5" android:keyIcon="@mipmap/ic_label_backspace_white" android:keyWidth="15%p" android:keyEdgeFlags="right" android:isRepeatable="true"/>
+        <Key android:codes="48" android:keyLabel="0" android:popupKeyboard="@xml/popupview" android:popupCharacters="٠०〇零영무០๐" android:keyEdgeFlags="right" />
     </Row>
     <Row>
         <Key android:codes="113" android:keyLabel="q" android:popupKeyboard="@xml/popupview" android:popupCharacters="ꝗʠɋꝙqϙԛ℺" android:keyEdgeFlags="left"/>
@@ -58,8 +57,9 @@
         <Key android:codes="-2" android:keyLabel="123" android:keyWidth="10%p" android:keyEdgeFlags="left"/>
         <Key android:codes="-101" android:keyIcon="@mipmap/ic_language_white" android:keyWidth="10%p" />
         <Key android:codes="47" android:keyLabel="/" android:keyWidth="10%p" android:popupKeyboard="@xml/popupview" android:popupCharacters="‰‱⁂\\／⁄‴″" />
-        <Key android:codes="32" android:keyLabel=" " android:keyWidth="40%p" android:isRepeatable="true" />
+        <Key android:codes="32" android:keyLabel=" " android:keyWidth="25%p" android:isRepeatable="true" />
         <Key android:codes="44" android:keyLabel="," android:keyWidth="10%p" android:popupKeyboard="@xml/popupview" android:popupCharacters="“„«»‘'ʹ‷" />
+        <Key android:codes="-5" android:keyIcon="@mipmap/ic_label_backspace_white" android:keyWidth="15%p" android:isRepeatable="true"/>
         <Key android:codes="-4" android:keyLabel="DONE" android:keyWidth="20%p" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>

@@ -25,40 +25,40 @@
     android:keyHeight="@dimen/key_height" >
 
     <Row>
-        <Key android:codes="49" android:keyLabel="1" android:popupKeyboard="@xml/popupview" android:popupCharacters="" android:keyEdgeFlags="left"/>
-        <Key android:codes="50" android:keyLabel="2" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="51" android:keyLabel="3" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="52" android:keyLabel="4" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="53" android:keyLabel="5" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="54" android:keyLabel="6" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="55" android:keyLabel="7" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="56" android:keyLabel="8" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="57" android:keyLabel="9" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="48" android:keyLabel="0" android:popupKeyboard="@xml/popupview" android:popupCharacters="" android:keyEdgeFlags="right"/>
+        <Key android:codes="49" android:keyLabel="1" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒈⑴㈠①⒒⑾" android:keyEdgeFlags="left"/>
+        <Key android:codes="50" android:keyLabel="2" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒉⑵㈡②⒓⑿"/>
+        <Key android:codes="51" android:keyLabel="3" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒊⑶㈢③⒔⒀"/>
+        <Key android:codes="52" android:keyLabel="4" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒋⑷㈣④⒕⒁"/>
+        <Key android:codes="53" android:keyLabel="5" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒌⑸㈤⑤⒖⒂"/>
+        <Key android:codes="54" android:keyLabel="6" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒍⑹㈥⑥⒗⒃"/>
+        <Key android:codes="55" android:keyLabel="7" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒎⑺㈦⑦⒘⒄"/>
+        <Key android:codes="56" android:keyLabel="8" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒏⑻㈧⑧⒙⒅"/>
+        <Key android:codes="57" android:keyLabel="9" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒐⑼㈨⑨⒚⒆"/>
+        <Key android:codes="48" android:keyLabel="0" android:popupKeyboard="@xml/popupview" android:popupCharacters="⒑⑽㈩⑩⒛⒇〇" android:keyEdgeFlags="right"/>
     </Row>
     
     <Row>
-        <Key android:codes="64" android:keyLabel="\@" android:popupKeyboard="@xml/popupview" android:popupCharacters="" android:keyEdgeFlags="left"/>
-        <Key android:codes="35" android:keyLabel="\#" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="36" android:keyLabel="$" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="37" android:keyLabel="%" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="38" android:keyLabel="&amp;" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="42" android:keyLabel="*" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="45" android:keyLabel="-" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="61" android:keyLabel="=" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="40" android:keyLabel="(" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="41" android:keyLabel=")" android:popupKeyboard="@xml/popupview" android:popupCharacters="" android:keyEdgeFlags="right"/>
+        <Key android:codes="64" android:keyLabel="\@" android:popupKeyboard="@xml/popupview" android:popupCharacters="＠" android:keyEdgeFlags="left"/>
+        <Key android:codes="35" android:keyLabel="\#" android:popupKeyboard="@xml/popupview" android:popupCharacters="＃"/>
+        <Key android:codes="36" android:keyLabel="$" android:popupKeyboard="@xml/popupview" android:popupCharacters="￥"/>
+        <Key android:codes="37" android:keyLabel="%" android:popupKeyboard="@xml/popupview" android:popupCharacters="×"/>
+        <Key android:codes="38" android:keyLabel="&amp;" android:popupKeyboard="@xml/popupview" android:popupCharacters="％＆"/>
+        <Key android:codes="42" android:keyLabel="*" android:popupKeyboard="@xml/popupview" android:popupCharacters="※☆★"/>
+        <Key android:codes="45" android:keyLabel="-" android:popupKeyboard="@xml/popupview" android:popupCharacters="_－＿￣→←↑↓"/>
+        <Key android:codes="61" android:keyLabel="=" android:popupKeyboard="@xml/popupview" android:popupCharacters="＝〓＋"/>
+        <Key android:codes="40" android:keyLabel="(" android:popupKeyboard="@xml/popupview" android:popupCharacters="[{［｛"/>
+        <Key android:codes="41" android:keyLabel=")" android:popupKeyboard="@xml/popupview" android:popupCharacters="]}］｝" android:keyEdgeFlags="right"/>
     </Row>
     
     <Row>
         <Key android:codes="-1" android:keyIcon="@mipmap/ic_shift"  android:keyWidth="15%p" android:isModifier="true" android:isSticky="true" android:keyEdgeFlags="left"/>
-        <Key android:codes="33" android:keyLabel="!" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="34" android:keyLabel="&quot;" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="39" android:keyLabel="\'" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="58" android:keyLabel=":" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="59" android:keyLabel=";" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="47" android:keyLabel="/" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="63" android:keyLabel="\?" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
+        <Key android:codes="33" android:keyLabel="!" android:popupKeyboard="@xml/popupview" android:popupCharacters="！！"/>
+        <Key android:codes="34" android:keyLabel="&quot;" android:popupKeyboard="@xml/popupview" android:popupCharacters="＂"/>
+        <Key android:codes="39" android:keyLabel="\'" android:popupKeyboard="@xml/popupview" android:popupCharacters="'‘’＇"/>
+        <Key android:codes="58" android:keyLabel=":" android:popupKeyboard="@xml/popupview" android:popupCharacters="："/>
+        <Key android:codes="59" android:keyLabel=";" android:popupKeyboard="@xml/popupview" android:popupCharacters="；"/>
+        <Key android:codes="47" android:keyLabel="/" android:popupKeyboard="@xml/popupview" android:popupCharacters="／"/>
+        <Key android:codes="63" android:keyLabel="\?" android:popupKeyboard="@xml/popupview" android:popupCharacters="＼？"/>
         <Key android:codes="-5" android:keyIcon="@mipmap/ic_label_backspace_white"  android:keyWidth="15%p" android:keyEdgeFlags="right" android:isRepeatable="true"/>
     </Row>
     
@@ -71,7 +71,7 @@
         <Key android:codes="-101" android:keyIcon="@mipmap/ic_language_white" android:keyWidth="20%p" />
         <Key android:codes="32" android:keyLabel=" "  android:keyWidth="20%p" android:isRepeatable="true" />
         <Key android:codes="10" android:keyLabel="RETURN" android:keyWidth="20%p"/>
-        <Key android:codes="44" android:keyLabel="," android:keyWidth="10%p"  android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
+        <Key android:codes="44" android:keyLabel="," android:keyWidth="10%p"  android:popupKeyboard="@xml/popupview" android:popupCharacters="，、＼"/>
         <Key android:codes="-4" android:keyLabel="DONE" android:keyWidth="15%p" android:keyEdgeFlags="right" />
     </Row>
 </Keyboard>
