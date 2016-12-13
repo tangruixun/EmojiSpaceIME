@@ -26,12 +26,12 @@
     >
 
     <Row>
-        <Key android:codes="126" android:keyLabel="~" android:popupKeyboard="@xml/popupview" android:popupCharacters="" android:keyEdgeFlags="left"/>
-        <Key android:codes="177" android:keyLabel="±" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="215" android:keyLabel="×" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="247" android:keyLabel="÷" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="8226" android:keyLabel="•" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
-        <Key android:codes="176" android:keyLabel="°" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
+        <Key android:codes="126" android:keyLabel="~" android:popupKeyboard="@xml/popupview" android:popupCharacters="～" android:keyEdgeFlags="left"/>
+        <Key android:codes="177" android:keyLabel="±" android:popupKeyboard="@xml/popupview" android:popupCharacters="＋－"/>
+        <Key android:codes="215" android:keyLabel="×" android:popupKeyboard="@xml/popupview" android:popupCharacters="X"/>
+        <Key android:codes="247" android:keyLabel="÷" android:popupKeyboard="@xml/popupview" android:popupCharacters="…"/>
+        <Key android:codes="8226" android:keyLabel="•" android:popupKeyboard="@xml/popupview" android:popupCharacters="｀·"/>
+        <Key android:codes="176" android:keyLabel="°" android:popupKeyboard="@xml/popupview" android:popupCharacters="·"/>
         <Key android:codes="96" android:keyLabel="`" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
         <Key android:codes="180" android:keyLabel="´" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>
         <Key android:codes="123" android:keyLabel="{" android:popupKeyboard="@xml/popupview" android:popupCharacters=""/>

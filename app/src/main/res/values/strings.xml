@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Keyboards &amp; Emoji Spacebar</string>
-    <string name="emojispace_input_label">Keyboards and Emoji Bar</string>
-    <string name="subtype_en_US">English・Symbols・Emoji</string>
+    <string name="app_name">Alternative Keyboards &amp; Emoji Bar</string>
+    <string name="emojispace_input_label">Alternative IME</string>
+    <string name="subtype_en_US">Multiple Languages</string>
     <string name="emojispace_input_settings_label">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -34,7 +34,7 @@
         <item>6</item>
     </string-array>
 
-    <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="pref_title_about_info">About Info</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
@@ -44,10 +44,11 @@
     <string name="emoji_picker_key">emoji_picker_key</string>
     <string name="emoji_picker_title">Pick Emoji for space bar</string>
     <string name="desc_emoji_item">emoji_item</string>
-    <string name="space_bar_setting_title">Space Bar Setting</string>
+    <string name="space_bar_setting_title">Click Below for Space Bar Setting</string>
     <string name="space_string_place_holder"> </string>
     <string name="pref_press_button_sound_key">pref_press_button_sound_key</string>
     <string name="pref_press_button_vibrate_key">pref_press_button_vibrate_key</string>
     <string name="pref_alter_layout_key">pref_alter_layout_key</string>
     <string name="pref_header_about">About</string>
+    <string name="copyright_content">TRX</string>
 </resources>

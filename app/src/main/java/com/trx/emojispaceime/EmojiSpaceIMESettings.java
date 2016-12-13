@@ -198,7 +198,8 @@ public class EmojiSpaceIMESettings extends AppCompatPreferenceActivity {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || SpaceCharSelectionPreferenceFragment.class.getName().equals(fragmentName)
                 || AlterLayoutPreferenceFragment.class.getName().equals(fragmentName)
-                || NotificationPreferenceFragment.class.getName().equals(fragmentName);
+                || NotificationPreferenceFragment.class.getName().equals(fragmentName)
+                || AboutPreferenceFragment.class.getName ().equals (fragmentName);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
